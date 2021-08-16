@@ -1,0 +1,155 @@
+{
+  "version": 1,
+  "projects": {
+    "erp-tuition": {
+      "projectType": "application",
+      "root": "apps/erp-tuition",
+      "sourceRoot": "apps/erp-tuition/src",
+      "prefix": "erptuition",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/erp-tuition",
+            "index": "apps/erp-tuition/src/index.html",
+            "main": "apps/erp-tuition/src/main.ts",
+            "polyfills": "apps/erp-tuition/src/polyfills.ts",
+            "tsConfig": "apps/erp-tuition/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "apps/erp-tuition/src/favicon.ico",
+              "apps/erp-tuition/src/assets"
+            ],
+            "styles": ["apps/erp-tuition/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/erp-tuition/src/environments/environment.ts",
+                  "with": "apps/erp-tuition/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "erp-tuition:build:production"
+            },
+            "development": {
+              "browserTarget": "erp-tuition:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "erp-tuition:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/erp-tuition/src/**/*.ts",
+              "apps/erp-tuition/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/erp-tuition"],
+          "options": {
+            "jestConfig": "apps/erp-tuition/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "erp-tuition-e2e": {
+      "root": "apps/erp-tuition-e2e",
+      "sourceRoot": "apps/erp-tuition-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/erp-tuition-e2e/cypress.json",
+            "tsConfig": "apps/erp-tuition-e2e/tsconfig.e2e.json",
+            "devServerTarget": "erp-tuition:serve:development"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "erp-tuition:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/erp-tuition-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
+  "defaultProject": "erp-tuition"
+}
